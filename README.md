@@ -59,7 +59,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 #### **Utilitários**
 
 -   Protótipo:  **[Figma](https://www.figma.com/)**  →  **[Protótipo (Marvel Heroes)](https://www.figma.com/file/svm9zry1xWvpdsiUDIL4q5/Marvel-Heroes-(Community)?node-id=218%3A4647)**
--   API:  **[Marvel Developer](https://developer.marvel.com)
+-   API:  **[Marvel Developer](https://developer.marvel.com)**
 -   Editor:  **[Android Studio](https://developer.android.com/studio)**
 -   Teste de API:  **[Insomnia](https://insomnia.rest/)**
 -   Teste unitário:  **[Mockk](https://mockk.io/ANDROID.html)**
