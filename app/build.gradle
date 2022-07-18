@@ -57,6 +57,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     implementation "androidx.paging:paging-compose:$paging_compose_version"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "androidx.navigation:navigation-compose:$nav_version"
 
     // Integration with ViewModels
 

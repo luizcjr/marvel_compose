@@ -1,96 +1,49 @@
-package com.example.marvelcompose.presentation.main
+package com.example.marvelcompose.presentation.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.example.marvelcompose.R
 import com.example.marvelcompose.domain.model.Character
 import com.example.marvelcompose.presentation.components.ErrorItem
 import com.example.marvelcompose.presentation.components.LoadingItem
 import com.example.marvelcompose.presentation.components.LoadingView
-import com.example.marvelcompose.presentation.main.view.MainViewModel
-import com.example.marvelcompose.presentation.theme.MarvelComposeTheme
+import com.example.marvelcompose.presentation.navigation.NavigationRoutes
 import com.example.marvelcompose.presentation.theme.cardTitle
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import org.koin.androidx.viewmodel.ext.android.viewModel
-
-@OptIn(ExperimentalMaterial3Api::class)
-class MainActivity : ComponentActivity() {
-
-    private val viewModel: MainViewModel by viewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MarvelComposeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Scaffold(
-                        topBar = {
-                            SmallTopAppBar(
-                                title = {
-                                    Row {
-                                        Image(
-                                            modifier = Modifier
-                                                .align(CenterVertically)
-                                                .fillMaxWidth(),
-                                            painter =
-                                            painterResource(id = R.drawable.ic_app_bar_logo),
-                                            contentDescription = "Logo da Marvel"
-                                        )
-                                    }
-                                },
-                                colors = TopAppBarDefaults.smallTopAppBarColors(
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                )
-                            )
-                        }
-                    ) { values ->
-                        CharacterListLayout(viewModel.getAllCharacters(""), values)
-                    }
-                }
-            }
-        }
-    }
-}
 
 @ExperimentalMaterial3Api
 @Composable
 fun CharacterListLayout(
     characterList: Flow<PagingData<Character>>?,
-    paddingValues: PaddingValues = PaddingValues(0.dp)
+    paddingValues: PaddingValues = PaddingValues(0.dp),
+    navController: NavController?
 ) {
     characterList?.let { character ->
         val charactersLazyItems: LazyPagingItems<Character> = character.collectAsLazyPagingItems()
         LazyColumn(contentPadding = paddingValues) {
             items(charactersLazyItems) { item ->
                 item?.let { character ->
-                    CharacterItem(character = character, onClick = { })
+                    CharacterItem(
+                        character = character,
+                        onClick = { navController?.navigate(NavigationRoutes.CharacterDetails.route + "/${character.id}") })
                 }
             }
             charactersLazyItems.apply {
@@ -177,23 +130,5 @@ fun CharacterItem(character: Character?, onClick: () -> Unit, modifier: Modifier
                 }
             }
         }
-    }
-}
-
-@ExperimentalMaterial3Api
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    val characterReponseSpider = Character("Spider-Man", "spider-man.png")
-    val characterReponseIronMan = Character("Iron-Man", "iron-man.png")
-    val pagingDataCharacters = PagingData.from(
-        listOf(
-            characterReponseSpider,
-            characterReponseIronMan
-        )
-    )
-
-    MarvelComposeTheme {
-        CharacterListLayout(flowOf(pagingDataCharacters))
     }
 }

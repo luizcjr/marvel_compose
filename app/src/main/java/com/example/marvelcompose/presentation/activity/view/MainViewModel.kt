@@ -1,4 +1,4 @@
-package com.example.marvelcompose.presentation.main.view
+package com.example.marvelcompose.presentation.activity.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

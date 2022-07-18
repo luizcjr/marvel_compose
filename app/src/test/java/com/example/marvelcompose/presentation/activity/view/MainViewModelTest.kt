@@ -1,10 +1,10 @@
-package com.example.marvelcompose.presentation.main.view
+package com.example.marvelcompose.presentation.activity.view
 
 import androidx.paging.PagingData
 import com.example.marvelcompose.MainCoroutineRule
 import com.example.marvelcompose.domain.usecase.CharactersUseCase
-import com.example.marvelcompose.presentation.main.view.MainViewModelTestMock.characterReponseIronMan
-import com.example.marvelcompose.presentation.main.view.MainViewModelTestMock.characterReponseSpider
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.characterReponseIronMan
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.characterReponseSpider
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
