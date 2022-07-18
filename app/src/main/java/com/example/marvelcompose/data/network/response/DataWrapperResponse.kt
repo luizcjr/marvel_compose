@@ -1,6 +1,6 @@
 package com.example.marvelcompose.data.network.response
 
-data class DataWrapperResponse(
+data class DataWrapperResponse<T>(
     val copyright: String,
-    val data: DataContainerResponse
+    val data: DataContainerResponse<T>
 )

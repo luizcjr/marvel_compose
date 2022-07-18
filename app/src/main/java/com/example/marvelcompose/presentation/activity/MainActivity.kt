@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         }
                     ) { values ->
                         ScreenMain(
-                            characterList = viewModel.getAllCharacters(""),
+                            viewModel = viewModel,
                             paddingValues = values
                         )
                     }
@@ -72,8 +72,8 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val characterReponseSpider = Character(1, "Spider-Man", "spider-man.png")
-    val characterReponseIronMan = Character(2, "Iron-Man", "iron-man.png")
+    val characterReponseSpider = Character(1, "Spider-Man", "description", "spider-man.png")
+    val characterReponseIronMan = Character(2, "Iron-Man", "description", "iron-man.png")
     val pagingDataCharacters = PagingData.from(
         listOf(
             characterReponseSpider,

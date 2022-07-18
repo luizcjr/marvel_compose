@@ -3,19 +3,18 @@ package com.example.marvelcompose.presentation.screens
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.paging.PagingData
-import com.example.marvelcompose.domain.model.Character
+import com.example.marvelcompose.presentation.activity.view.MainViewModel
 import com.example.marvelcompose.presentation.navigation.NavigationRoutes
-import kotlinx.coroutines.flow.Flow
 
 @ExperimentalMaterial3Api
 @Composable
 fun ScreenMain(
-    characterList: Flow<PagingData<Character>>?,
+    viewModel: MainViewModel,
     paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
 
@@ -23,12 +22,15 @@ fun ScreenMain(
 
     NavHost(navController = navController, startDestination = NavigationRoutes.Characters.route) {
         composable(NavigationRoutes.Characters.route) {
-            CharacterListLayout(characterList, paddingValues, navController)
+            CharacterListLayout(viewModel.getAllCharacters(""), paddingValues, navController)
         }
 
         composable(NavigationRoutes.CharacterDetails.route + "/{id}") { navBackStack ->
             val id = navBackStack.arguments?.getString("id")
-            CharacterDetailsLayout()
+            id?.let {
+                viewModel.getCharacterById(it.toInt())
+                CharacterDetailsLayout(viewModel.character.observeAsState().value, paddingValues)
+            }
         }
     }
 }

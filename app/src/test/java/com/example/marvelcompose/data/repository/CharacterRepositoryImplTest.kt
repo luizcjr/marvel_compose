@@ -21,4 +21,11 @@ class CharacterRepositoryImplTest {
         val result = repository.fetchCharacters(mapOf(Pair("", "")))
         assertEquals(dataWrapperResponse, result)
     }
+
+    @Test
+    fun `given repository, when call getCharacterById, then return data`() = runBlocking {
+        whenever(service.getCharactersById(1)).doReturn(dataWrapperResponse)
+        val result = repository.fetchCharacterById(1)
+        assertEquals(dataWrapperResponse, result)
+    }
 }
