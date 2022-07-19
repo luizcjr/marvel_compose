@@ -8,6 +8,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -15,17 +16,23 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.marvelcompose.domain.model.Character
 import com.example.marvelcompose.presentation.components.LoadingItem
+import com.example.marvelcompose.presentation.components.LoadingView
 import com.example.marvelcompose.presentation.theme.cardTitle
 import com.skydoves.landscapist.glide.GlideImage
 
 @ExperimentalMaterial3Api
 @Composable
 fun CharacterDetailsLayout(
-    character: List<Character>?,
+    characterState: State<List<Character>?>,
+    loadingState: State<Boolean?>,
     paddingValues: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier
 ) {
-    character?.let { characterDetail ->
+    if (loadingState.value == true) {
+        LoadingView(modifier = Modifier.fillMaxSize())
+    }
+
+    characterState.value?.let { characterDetail ->
         characterDetail.firstNotNullOf {
             LazyColumn(contentPadding = paddingValues) {
                 item {

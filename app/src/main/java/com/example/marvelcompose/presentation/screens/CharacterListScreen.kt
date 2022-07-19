@@ -9,6 +9,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -32,11 +33,11 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalMaterial3Api
 @Composable
 fun CharacterListLayout(
-    characterList: Flow<PagingData<Character>>?,
+    characterState: State<Flow<PagingData<Character>>>?,
     paddingValues: PaddingValues = PaddingValues(0.dp),
     navController: NavController?
 ) {
-    characterList?.let { character ->
+    characterState?.value?.let { character ->
         val charactersLazyItems: LazyPagingItems<Character> = character.collectAsLazyPagingItems()
         LazyColumn(contentPadding = paddingValues) {
             items(charactersLazyItems) { item ->

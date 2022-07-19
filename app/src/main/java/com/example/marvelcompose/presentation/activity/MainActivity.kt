@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -82,6 +83,6 @@ fun DefaultPreview() {
     )
 
     MarvelComposeTheme {
-        CharacterListLayout(flowOf(pagingDataCharacters), navController = null)
+        CharacterListLayout(mutableStateOf(flowOf(pagingDataCharacters)), navController = null)
     }
 }

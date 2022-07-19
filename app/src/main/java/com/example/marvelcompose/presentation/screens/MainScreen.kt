@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,14 +23,22 @@ fun ScreenMain(
 
     NavHost(navController = navController, startDestination = NavigationRoutes.Characters.route) {
         composable(NavigationRoutes.Characters.route) {
-            CharacterListLayout(viewModel.getAllCharacters(""), paddingValues, navController)
+            CharacterListLayout(
+                mutableStateOf(viewModel.getAllCharacters("")),
+                paddingValues,
+                navController
+            )
         }
 
         composable(NavigationRoutes.CharacterDetails.route + "/{id}") { navBackStack ->
             val id = navBackStack.arguments?.getString("id")
             id?.let {
                 viewModel.getCharacterById(it.toInt())
-                CharacterDetailsLayout(viewModel.character.observeAsState().value, paddingValues)
+                CharacterDetailsLayout(
+                    viewModel.character.observeAsState(),
+                    viewModel.loading.observeAsState(),
+                    paddingValues
+                )
             }
         }
     }
