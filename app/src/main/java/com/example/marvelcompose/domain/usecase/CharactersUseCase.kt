@@ -12,7 +12,5 @@ interface CharactersUseCase {
     fun getComics(id: Int): Flow<PagingData<Details>>
     fun getSeries(id: Int): Flow<PagingData<Details>>
     fun getEvents(id: Int): Flow<PagingData<Details>>
-
-    @Throws(IOException::class)
     suspend fun getCharacterById(id: Int): List<Character>
 }

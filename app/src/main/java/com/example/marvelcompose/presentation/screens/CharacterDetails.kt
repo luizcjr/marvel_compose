@@ -137,7 +137,7 @@ fun CharacterDetailsLayout(
                                     end.linkTo(parent.end)
                                     start.linkTo(parent.start)
                                 },
-                            text = "Quadrinho${if (comicsLazyItems.itemCount > 1) "s" else ""}",
+                            text = "Quadrinhos",
                             color = Color.White,
                             style = cardTitle
                         )
@@ -164,7 +164,7 @@ fun CharacterDetailsLayout(
                                     end.linkTo(parent.end)
                                     start.linkTo(parent.start)
                                 },
-                            text = "Série${if (seriesLazyItems.itemCount > 1) "s" else ""}",
+                            text = "Séries",
                             color = Color.White,
                             style = cardTitle
                         )
@@ -191,7 +191,7 @@ fun CharacterDetailsLayout(
                                     end.linkTo(parent.end)
                                     start.linkTo(parent.start)
                                 },
-                            text = "Evento${if (eventsLazyItems.itemCount > 1) "s" else ""}",
+                            text = "Eventos",
                             color = Color.White,
                             style = cardTitle
                         )

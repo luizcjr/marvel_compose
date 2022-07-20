@@ -29,19 +29,22 @@ class MainViewModel(
         useCase.getCharacters(query)
 
     fun getCharacterDetailsById(id: Int) {
+        _loading.postValue(true)
         viewModelScope.launch {
             try {
-                _loading.postValue(true)
-                async {
-                    _characterDetails.postValue(
-                        CharacterDetails(
-                            useCase.getCharacterById(id),
-                            useCase.getComics(id),
-                            useCase.getSeries(id),
-                            useCase.getEvents(id)
-                        )
+                val charactersByIdDef = async { useCase.getCharacterById(id) }
+                val charactersComicsByIdDef = async { useCase.getComics(id) }
+                val charactersSeriesByIdDef = async { useCase.getSeries(id) }
+                val charactersByEventIdDef = async { useCase.getEvents(id) }
+
+                _characterDetails.postValue(
+                    CharacterDetails(
+                        charactersByIdDef.await(),
+                        charactersComicsByIdDef.await(),
+                        charactersSeriesByIdDef.await(),
+                        charactersByEventIdDef.await()
                     )
-                }
+                )
             } catch (e: Exception) {
                 throw IOException()
             } finally {
