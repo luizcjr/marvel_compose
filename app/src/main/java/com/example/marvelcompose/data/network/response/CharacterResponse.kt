@@ -12,7 +12,7 @@ data class CharacterResponse(
 fun CharacterResponse.toCharacterModel(): Character = Character(
     id = this.id,
     name = this.name,
-    description = this.description,
+    description = this.description.ifEmpty { "Esse personagem não possui descrição! :(" },
     imageUrl = "${this.thumbnail.path}.${this.thumbnail.extension}"
         .replace("http", "https")
 )

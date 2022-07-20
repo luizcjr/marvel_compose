@@ -53,6 +53,13 @@ val homeTitle = TextStyle(
     fontFamily = fontFamily
 )
 
+val nameTitle = TextStyle(
+    fontSize = 26.sp,
+    fontWeight = FontWeight.Bold,
+    color = TextColor,
+    fontFamily = fontFamily
+)
+
 val cardTitle = TextStyle(
     fontSize = 20.sp,
     fontWeight = FontWeight.Black,
@@ -83,21 +90,21 @@ val homeSubtitle = TextStyle(
     fontFamily = fontFamily
 )
 
-val description = TextStyle(
-    fontSize = 14.sp,
+val descriptionStyle = TextStyle(
+    fontSize = 16.sp,
     fontWeight = FontWeight.Medium,
     color = TextColor,
     fontFamily = fontFamily
 )
 
-val caracteristc = TextStyle(
+val caracteristicStyle = TextStyle(
     fontSize = 12.sp,
     fontWeight = FontWeight.Medium,
     color = TextColor,
     fontFamily = fontFamily
 )
 
-val ability = TextStyle(
+val abilityStyle = TextStyle(
     fontSize = 12.sp,
     fontWeight = FontWeight.Normal,
     color = TextColor,

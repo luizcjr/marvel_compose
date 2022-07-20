@@ -5,11 +5,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.marvelcompose.data.network.response.toCharacterModel
 import com.example.marvelcompose.data.paging.CharactersPagingSource
+import com.example.marvelcompose.data.paging.ComicsPagingSource
+import com.example.marvelcompose.data.paging.SeriesPagingSource
+import com.example.marvelcompose.data.paging.EventsPagingSource
 import com.example.marvelcompose.data.repository.CharacterRepository
 import com.example.marvelcompose.domain.model.Character
+import com.example.marvelcompose.domain.model.Details
 import kotlinx.coroutines.flow.Flow
 import java.io.IOException
-import kotlin.jvm.Throws
 
 class CharactersUseCaseImpl(
     private val repository: CharacterRepository
@@ -27,6 +30,24 @@ class CharactersUseCaseImpl(
         }
     } catch (e: Exception) {
         throw IOException()
+    }
+
+    override fun getComics(id: Int): Flow<PagingData<Details>> {
+        return Pager(getPageConfig()) {
+            ComicsPagingSource(repository, id)
+        }.flow
+    }
+
+    override fun getSeries(id: Int): Flow<PagingData<Details>> {
+        return Pager(getPageConfig()) {
+            SeriesPagingSource(repository, id)
+        }.flow
+    }
+
+    override fun getEvents(id: Int): Flow<PagingData<Details>> {
+        return Pager(getPageConfig()) {
+            EventsPagingSource(repository, id)
+        }.flow
     }
 
     private fun getPageConfig() = PagingConfig(

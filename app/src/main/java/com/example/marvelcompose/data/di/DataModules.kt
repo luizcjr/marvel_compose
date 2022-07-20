@@ -47,6 +47,9 @@ object DataModules {
                 okHttpBuilder.callTimeout(connectionTimeoutSeconds, TimeUnit.SECONDS)
                 okHttpBuilder.connectTimeout(connectionTimeoutSeconds, TimeUnit.SECONDS)
                 okHttpBuilder.addInterceptor(loggingInterceptor)
+                if (BuildConfig.DEBUG) {
+                    okHttpBuilder.addInterceptor(OkHttpProfilerInterceptor())
+                }
                 okHttpBuilder.addInterceptor(
                     AuthorizationInterceptor(
                         publicKey = PUBLIC_KEY,
@@ -54,9 +57,6 @@ object DataModules {
                         calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
                     )
                 )
-                if (BuildConfig.DEBUG) {
-                    okHttpBuilder.addInterceptor(OkHttpProfilerInterceptor())
-                }
                 okHttpBuilder.build()
             }
         }

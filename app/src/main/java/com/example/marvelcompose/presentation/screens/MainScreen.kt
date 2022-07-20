@@ -33,10 +33,10 @@ fun ScreenMain(
         composable(NavigationRoutes.CharacterDetails.route + "/{id}") { navBackStack ->
             val id = navBackStack.arguments?.getString("id")
             id?.let {
-                viewModel.getCharacterById(it.toInt())
+                viewModel.getCharacterDetailsById(it.toInt())
                 CharacterDetailsLayout(
-                    viewModel.character.observeAsState(),
                     viewModel.loading.observeAsState(),
+                    viewModel.characterDetails.observeAsState(),
                     paddingValues
                 )
             }

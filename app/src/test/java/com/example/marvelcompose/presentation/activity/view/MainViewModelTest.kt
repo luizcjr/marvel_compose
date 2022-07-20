@@ -4,10 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.paging.PagingData
 import com.example.marvelcompose.MainCoroutineRule
-import com.example.marvelcompose.domain.model.Character
 import com.example.marvelcompose.domain.usecase.CharactersUseCase
-import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.characterReponseIronMan
-import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.characterReponseSpider
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.characterResponseIronMan
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.characterResponseSpider
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.pagingDataComics
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.pagingDataSeries
+import com.example.marvelcompose.presentation.activity.view.MainViewModelTestMock.pagingDataStories
+import com.example.marvelcompose.presentation.activity.view.model.CharacterDetails
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -31,14 +34,14 @@ class MainViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     private val useCase = mock<CharactersUseCase>()
-    private val characterObserver = mock<Observer<List<Character>>>()
+    private val characterObserver = mock<Observer<CharacterDetails>>()
     private val loadingObserver = mock<Observer<Boolean>>()
     private lateinit var viewModel: MainViewModel
 
     private val pagingDataCharacters = PagingData.from(
         listOf(
-            characterReponseSpider,
-            characterReponseIronMan
+            characterResponseSpider,
+            characterResponseIronMan
         )
     )
 
@@ -46,7 +49,7 @@ class MainViewModelTest {
     @Before
     fun setup() {
         viewModel = MainViewModel(useCase)
-        viewModel.character.observeForever(characterObserver)
+        viewModel.characterDetails.observeForever(characterObserver)
         viewModel.loading.observeForever(loadingObserver)
     }
 
@@ -61,13 +64,25 @@ class MainViewModelTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `when observe live data, then call get character by id, then return character detail`() =
+    fun `when observe live data, then call get character details by id, then return character detail`() =
         runBlocking {
-            whenever(useCase.getCharacterById(1)).doReturn(listOf(characterReponseSpider))
-            viewModel.getCharacterById(1)
+            val comicsFlow = flowOf(pagingDataComics)
+            val seriesFlow = flowOf(pagingDataSeries)
+            val storiesFlow = flowOf(pagingDataStories)
+            whenever(useCase.getCharacterById(1)).doReturn(listOf(characterResponseSpider))
+            whenever(useCase.getComics(1)).doReturn(comicsFlow)
+            whenever(useCase.getSeries(1)).doReturn(seriesFlow)
+            whenever(useCase.getEvents(1)).doReturn(storiesFlow)
+            viewModel.getCharacterDetailsById(1)
             verify(loadingObserver).onChanged(true)
-            verify(characterObserver).onChanged(listOf(characterReponseSpider))
+            verify(characterObserver).onChanged(
+                CharacterDetails(
+                    listOf(characterResponseSpider),
+                    comicsFlow,
+                    seriesFlow,
+                    storiesFlow
+                )
+            )
             verify(loadingObserver).onChanged(false)
-
         }
 }
