@@ -21,14 +21,9 @@ Marvel Compose - é um projeto onde estou utilizando a API da Marvel para coloca
 
 - [x] Na home o usuário tem acesso:
   - [x] a lista de personagens;
-  - [ ] pode fazer uma busca por um personagem específico.
   
-- [ ] Na tela de favoritos o usuário tem acesso:
-  - [ ] a lista de personagens favoritos;
-  - [ ] demarcar um personagem favorito.
-  
-- [ ] Na tela de detalhes do personagem, o usuário tem acesso;
-  - [ ] informações referente ao personagem selecionado.
+- [x] Na tela de detalhes do personagem, o usuário tem acesso;
+  - [x] informações referente ao personagem selecionado.
   
 ---
 
